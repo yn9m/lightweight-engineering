@@ -2,63 +2,35 @@
 
 A **highly customizable, general-purpose AI-first framework** specifically designed for **Antigravity 2.0**.
 
-> [!IMPORTANT]
-> **This is a skeleton framework.** It is not a rigid out-of-the-box solution, but a highly adaptable boilerplate. Every developer is expected to customize the templates, files, and rules in the `skills/` directory to suit their own tech stack, languages, architecture, linting configurations, and quality gates.
+This plugin eliminates all the heavy multi-agent loops and token-draining workflows of **Compound Engineering** and **Superpowers**. It replaces markdown specs, plans, and logs with a decentralized, zero-dependency git-commit workflow and a strict bug-to-autotest policy.
 
 ---
 
-## Philosophy & Origin
+## The Two Core Rules
 
-This framework was created out of frustration with existing tools like **Compound Engineering** and **Superpowers**. While those toolkits introduce excellent software engineering patterns, they often lead to excessive token consumption by spawning heavy, recursive multi-agent execution loops for simple actions.
+This skeleton plugin bootstraps your AI agent with exactly two rules:
 
-**Lightweight Engineering** takes the best concepts from both worlds:
-- Collaborative product brainstorming
-- Structured, dependency-aware step-by-step planning
-- Feature-level action logging
-- Isolated, deep code auditing
+### 1. Bug-to-Autotest Guarantee
+Whenever the agent debugs or fixes a bug in the codebase, it **must** write an automated test (unit/integration) that reproduces the bug (fails before the fix, passes after) before completing the task. This ensures the bug never recurs and locks in debug findings as code.
 
-Our goal is to **preserve the AI-first development philosophy** while **drastically reducing token waste** on redundant or low-value agent processes. All workflows (except code review) run directly inside the main chat context.
+### 2. Decentralized Commit Self-Documentation
+Instead of creating and reading separate `.md` log files or requirements specs (which is highly token-expensive), the agent documents its progress directly inside the **Git commit message**.
 
----
+Every commit prepared by the agent **must** use this template:
 
-## Key Features
+```text
+[feat/fix/chore]: <short description in Conventional Commits format>
 
-1. **Strict Separation of Concerns**:
-   - **`/le:brainstorm` (Product Logic)**: Collects requirements and defines scope. Forbidden from asking technical details (files, DB, code stack).
-   - **`/le:plan` (Technical Design)**: Focuses strictly on implementation steps, code locations, DB schema, and endpoints. Requires a prior brainstorm document.
-2. **Automated Per-Feature Logging (`/le:log`)**:
-   - Automatically maintains concise history files (`docs/features/<feature-name>-log.md`) keeping track of what was done, what was **not** done, and the **reasoning** behind decisions (*By Design*, *Out of Scope*, *Conscious Trade-offs*).
-3. **Mandatory Regression Testing**:
-   - Any bug found and fixed during debugging must be covered by a regression test (fails before the fix, passes after) to lock in context and save tokens in future runs.
-4. **Dual-Agent Code Review (`/le:code-review`)**:
-   - Spawns two concurrent subagents (Code Quality Reviewer & Security Auditor) to audit the diff and output a single, unified report.
+### What was done:
+- [relative file path] - [brief description of changes]
 
----
-
-## Directory Structure
-
-When initialized with `/le:setup`, the plugin sets up the following structure in your project:
-
-```
-docs/
-├── brainstorms/    # Requirements specs (docs/brainstorms/YYYY-MM-DD-<feature>-requirements.md)
-├── plans/          # Implementation plans (docs/plans/YYYY-MM-DD-<feature>-plan.md)
-├── features/       # Localized feature logs (docs/features/<feature>-log.md)
-├── solutions/      # Architectural patterns and reusable solutions
-├── Testing.md      # Testing strategy (80-90% Unit test coverage focus)
-├── Security.md     # Secrets, validation, and SAST criteria
-└── DefinitionOfDone.md  # Completion checklist (Conventional Commits, Regression tests)
+### What was NOT done & Why (MANDATORY):
+- <item omitted/deferred> [By Design: explanation]
+- <item omitted/deferred> [Out of Scope: explanation]
+- <item omitted/deferred> [Conscious Trade-off: explanation]
 ```
 
----
-
-## Available Commands
-
-- **`/le:setup`**: Initializes folder structure and writes project quality standard markdown files.
-- **`/le:brainstorm [feature]`**: Explores requirements and performs an adversarial pressure test. Writes requirements to `docs/brainstorms/`.
-- **`/le:plan [feature]`**: Gathers technical stack, schema, and API structure. Writes plan to `docs/plans/`.
-- **`/le:log [feature]`**: Updates log files and tracks deferred tasks / trade-offs.
-- **`/le:code-review [base commit] [head commit]`**: Runs parallel code quality and security reviews.
+This creates a self-documenting git history that any future agent or developer can search using `git log` rather than consuming tokens reading large directories of markdown logs.
 
 ---
 
