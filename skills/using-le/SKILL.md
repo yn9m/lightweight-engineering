@@ -57,3 +57,10 @@ When executing scripts (PowerShell, Bash, Python, etc.) or running build/run com
 - **Monitor Async Tasks Immediately**: When running a command asynchronously (background task), do not blindly wait for completion. Check its status and logs using `manage_task` shortly after launch to verify it has not crashed, exited with an error, or failed on a syntax issue.
 - **Handle Early Failures**: If a script exits immediately with a non-zero exit code or error output, capture the logs and address the bug immediately. Do not wait for timeouts.
 - **Kill Unresponsive/Hanging Tasks**: If a task hangs, runs in an infinite loop, or is unresponsive, terminate it immediately using `manage_task` with action `kill`. Never leave dangling background processes.
+
+### 5. Smart Subagent Delegation & Model Scaling (MANDATORY)
+To offload routine work and optimize token usage:
+- **Do Not Direct the User to Do Dirty Work**: Never instruct the user to manually perform routine mechanical tasks (such as copying/moving files, renaming directories, editing single lines, or running trivial package installations/commands). You must spawn a subagent to handle this automatically.
+- **Reasoning Complexity Assessment**: Before spawning a subagent, evaluate the task's complexity by depth (reasoning depth, not size or quantity):
+  - **Low-Reasoning Tasks (Mechanical/Routine)**: Editing simple syntax, renaming/moving files, installing packages, performing simple checks. Delegate to a subagent (e.g., `self` or `cavecrew-builder`) using a cheap model: `flash_lite` or `flash` to save tokens.
+  - **High-Reasoning Tasks (Deep/Architectural)**: Complex logical changes, multi-file refactoring, writing complex tests, or solving deep runtime bugs. Delegate using `inherit` or `pro` models.

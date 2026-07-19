@@ -2,13 +2,13 @@
 
 A **highly customizable, general-purpose AI-first framework** specifically designed for **Antigravity 2.0**.
 
-This plugin eliminates all the heavy multi-agent loops and token-draining workflows of **Compound Engineering** and **Superpowers**. It replaces markdown specs, plans, and logs with a decentralized, zero-dependency git-commit workflow, a strict bug-to-autotest policy, fact-first debugging, targeted, token-efficient research, and active process management.
+This plugin eliminates all the heavy multi-agent loops and token-draining workflows of **Compound Engineering** and **Superpowers**. It replaces markdown specs, plans, and logs with a decentralized, zero-dependency git-commit workflow, a strict bug-to-autotest policy, fact-first debugging, targeted research, and smart subagent delegation.
 
 ---
 
-## The Four Core Rules
+## The Five Core Rules
 
-This skeleton plugin bootstraps your AI agent with exactly four rules:
+This skeleton framework bootstraps your AI agent with exactly five rules:
 
 ### 1. Bug-to-Autotest Guarantee & Fact-First Debugging
 - **Fact-First Debugging**: The agent is strictly prohibited from guessing the cause of bugs or proposing changes without evidence. It must gather facts first (check errors, verify code lines, analyze logs). If context is lacking, it must ask clarifying questions or propose diagnostic commands rather than making assumptions.
@@ -47,6 +47,13 @@ To prevent hanging processes and undetected failures:
 - **Monitor Async Tasks**: When running background commands, verify status/logs using `manage_task` immediately after launching to detect early crashes or syntax errors.
 - **Handle Early Failures**: If a script exits immediately with an error, capture output and address it immediately rather than waiting blindly.
 - **Kill Unresponsive Tasks**: If a task hangs or goes into an infinite loop, terminate it immediately using `manage_task` with action `kill`.
+
+### 5. Smart Subagent Delegation & Model Scaling
+To optimize token usage and automate routine mechanical work:
+- **Do Not Direct the User to Do Dirty Work**: The agent must never instruct the user to manually perform routine mechanical tasks (like copying/moving files, renaming directories, editing single lines, or running simple installs/commands). It must spawn a subagent to handle this automatically.
+- **Reasoning Complexity Assessment**: Before spawning a subagent, the agent must evaluate the task's complexity by depth (not size or quantity):
+  - **Low-Reasoning Tasks (Mechanical/Routine)**: Editing simple syntax, renaming/moving files, performing basic checks. Delegate to a subagent using a cheap, low-reasoning model: `flash_lite` or `flash` to save tokens.
+  - **High-Reasoning Tasks (Deep/Complex)**: Complex logic changes, multi-file refactoring, writing complex tests, or solving deep runtime bugs. Delegate using `inherit` or `pro` models.
 
 ---
 
