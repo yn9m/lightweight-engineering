@@ -2,7 +2,7 @@
 
 A **highly customizable, general-purpose AI-first framework** specifically designed for **Antigravity 2.0**.
 
-This plugin eliminates all the heavy multi-agent loops and token-draining workflows of **Compound Engineering** and **Superpowers**. It replaces markdown specs, plans, and logs with a decentralized, zero-dependency git-commit workflow, a strict bug-to-autotest policy, and targeted, token-efficient research.
+This plugin eliminates all the heavy multi-agent loops and token-draining workflows of **Compound Engineering** and **Superpowers**. It replaces markdown specs, plans, and logs with a decentralized, zero-dependency git-commit workflow, a strict bug-to-autotest policy, fact-first debugging, and targeted, token-efficient research.
 
 ---
 
@@ -10,8 +10,9 @@ This plugin eliminates all the heavy multi-agent loops and token-draining workfl
 
 This skeleton plugin bootstraps your AI agent with exactly three rules:
 
-### 1. Bug-to-Autotest Guarantee
-Whenever the agent debugs or fixes a bug in the codebase, it **must** write an automated test (unit/integration) that reproduces the bug (fails before the fix, passes after) before completing the task. This ensures the bug never recurs and locks in debug findings as code.
+### 1. Bug-to-Autotest Guarantee & Fact-First Debugging
+- **Fact-First Debugging**: The agent is strictly prohibited from guessing the cause of bugs or proposing changes without evidence. It must gather facts first (check errors, verify code lines, analyze logs). If context is lacking, it must ask clarifying questions or propose diagnostic commands rather than making assumptions.
+- **Regression Testing**: Whenever the agent debugs or fixes a bug in the codebase, it **must** write an automated test (unit/integration) that reproduces the bug (fails before the fix, passes after) before completing the task. This ensures the bug never recurs and locks in debug findings as code.
 
 ### 2. Decentralized Commit Self-Documentation
 Instead of creating and reading separate `.md` log files or requirements specs (which is highly token-expensive), the agent documents its progress directly inside the **Git commit message**.

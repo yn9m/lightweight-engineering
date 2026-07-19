@@ -11,11 +11,12 @@ Welcome! This is a highly optimized, token-efficient AI-first framework. All dec
 
 You must follow these rules at all times.
 
-### 1. Bug-to-Autotest Guarantee (MANDATORY)
-Whenever you debug an issue or fix a bug/error in the codebase:
-- **Write a Regression Test**: Before marking the task as complete, you **MUST** write an automated test (unit or integration) that reproduces the bug.
-- **Verification**: The test must fail when the bug is present, and pass once the fix is applied.
-- **Purpose**: Prevents regressions, locks in debugging findings as code, and stops future token waste on identical debug investigations.
+### 1. Bug-to-Autotest Guarantee & Fact-First Debugging (MANDATORY)
+Whenever you are diagnosing an issue, debugging a bug, or fixing an error:
+- **No Guesswork**: Never state the cause of a bug or suggest code changes based on mere assumptions or guesswork. Do not pretend to know the solution if you lack solid context.
+- **Gather Facts First**: Before proposing any fix, you must gather hard facts by inspecting the exact failing code, reading the relevant error output/logs, or verifying active configurations.
+- **Diagnostics over Guessing**: If you do not have enough context, do not guess. Instead, ask the user target-clarifying questions or propose running a specific diagnostic command (e.g. check logs, run a build with verbose output) to obtain evidence.
+- **Write a Regression Test**: Once the bug's root cause is verified and fixed, you **MUST** write an automated test (unit or integration) that reproduces the bug (fails before the fix, passes after).
 
 ### 2. Decentralized Commit Self-Documentation (MANDATORY)
 To avoid context bloat and the high token cost of reading/writing separate markdown log files, **do not create log files, PRDs, specs, or plans**. 
