@@ -2,13 +2,13 @@
 
 A **highly customizable, general-purpose AI-first framework** specifically designed for **Antigravity 2.0**.
 
-This plugin eliminates all the heavy multi-agent loops and token-draining workflows of **Compound Engineering** and **Superpowers**. It replaces markdown specs, plans, and logs with a decentralized, zero-dependency git-commit workflow, a strict bug-to-autotest policy, fact-first debugging, and targeted, token-efficient research.
+This plugin eliminates all the heavy multi-agent loops and token-draining workflows of **Compound Engineering** and **Superpowers**. It replaces markdown specs, plans, and logs with a decentralized, zero-dependency git-commit workflow, a strict bug-to-autotest policy, fact-first debugging, targeted, token-efficient research, and active process management.
 
 ---
 
-## The Three Core Rules
+## The Four Core Rules
 
-This skeleton plugin bootstraps your AI agent with exactly three rules:
+This skeleton plugin bootstraps your AI agent with exactly four rules:
 
 ### 1. Bug-to-Autotest Guarantee & Fact-First Debugging
 - **Fact-First Debugging**: The agent is strictly prohibited from guessing the cause of bugs or proposing changes without evidence. It must gather facts first (check errors, verify code lines, analyze logs). If context is lacking, it must ask clarifying questions or propose diagnostic commands rather than making assumptions.
@@ -40,6 +40,13 @@ To prevent token waste, off-topic web search loops, and unnecessary file scannin
 - **Thought-First Investigation Planning**: Before using any investigation tool (`view_file`, `list_dir`, `grep_search`, `search_web`), the agent must write down a quick target plan in its thoughts explaining *what specific information/file it needs to find and why*.
 - **Strict Web Search Constraints**: Web searches are restricted strictly to technical docs, syntax references, or compiler error messages. General-knowledge or unrelated searches are banned.
 - **Strict Workspace Boundaries**: The agent will never read, search, or list files in paths outside the active project root (e.g. user home directories, system folders, App Data).
+
+### 4. Active Process Monitoring & Anti-Dangling Rule
+To prevent hanging processes and undetected failures:
+- **Pre-check Syntax**: Always verify syntax correctness of your scripts before executing them.
+- **Monitor Async Tasks**: When running background commands, verify status/logs using `manage_task` immediately after launching to detect early crashes or syntax errors.
+- **Handle Early Failures**: If a script exits immediately with an error, capture output and address it immediately rather than waiting blindly.
+- **Kill Unresponsive Tasks**: If a task hangs or goes into an infinite loop, terminate it immediately using `manage_task` with action `kill`.
 
 ---
 

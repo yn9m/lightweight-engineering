@@ -50,3 +50,10 @@ To minimize token consumption, avoid useless web search loops, and prevent unnec
 - **Thought-First Investigation Planning**: Before using any investigation tool (`view_file`, `list_dir`, `grep_search`, `search_web`), you must write down a quick target plan in your thinking block: *What specific information/file do I need to find, and why is it necessary for this task?* Do not create this as a markdown file for user review; keep it as a mental/thinking check.
 - **Strict Web Search Constraints**: Only search the web for technical documentation, syntax reference, or specific compiler/interpreter error messages. Do NOT perform general-knowledge searches, non-technical queries, or search for unrelated topics.
 - **Strict Workspace Boundaries**: Never list files, search, or read files in directory paths outside the user's workspace (e.g., user home folder, system directories, App Data). Ignore all directories outside the project root under any circumstances.
+
+### 4. Active Process Monitoring & Anti-Dangling Rule (MANDATORY)
+When executing scripts (PowerShell, Bash, Python, etc.) or running build/run commands:
+- **Pre-check Syntax**: Always verify syntax correctness of your scripts before executing them to avoid obvious early crashes.
+- **Monitor Async Tasks Immediately**: When running a command asynchronously (background task), do not blindly wait for completion. Check its status and logs using `manage_task` shortly after launch to verify it has not crashed, exited with an error, or failed on a syntax issue.
+- **Handle Early Failures**: If a script exits immediately with a non-zero exit code or error output, capture the logs and address the bug immediately. Do not wait for timeouts.
+- **Kill Unresponsive/Hanging Tasks**: If a task hangs, runs in an infinite loop, or is unresponsive, terminate it immediately using `manage_task` with action `kill`. Never leave dangling background processes.
