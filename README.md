@@ -36,6 +36,7 @@ This creates a self-documenting git history that any future agent or developer c
 ### 3. Strict Target-Driven Investigation & Research
 To prevent token waste, off-topic web search loops, and unnecessary file scanning:
 - **No Blind Scanning**: The agent will not scan directories recursively, search blindly, or read files outside the direct scope of the task.
+- **Ask for Paths (No Recursive Crawling)**: If the agent needs to access a specific file and does not know its path, or if the project has a large directory structure, it is strictly forbidden from running recursive file searches or listings. It must simply ask the user to provide the path in chat.
 - **Thought-First Investigation Planning**: Before using any investigation tool (`view_file`, `list_dir`, `grep_search`, `search_web`), the agent must write down a quick target plan in its thoughts explaining *what specific information/file it needs to find and why*.
 - **Strict Web Search Constraints**: Web searches are restricted strictly to technical docs, syntax references, or compiler error messages. General-knowledge or unrelated searches are banned.
 - **Strict Workspace Boundaries**: The agent will never read, search, or list files in paths outside the active project root (e.g. user home directories, system folders, App Data).
