@@ -2,7 +2,7 @@
 
 A **highly customizable, general-purpose AI-first framework** specifically designed for **Antigravity 2.0**.
 
-This plugin eliminates all the heavy multi-agent loops and token-draining workflows of **Compound Engineering** and **Superpowers**. It replaces markdown specs, plans, and logs with a decentralized, zero-dependency git-commit workflow, a strict bug-to-autotest policy, fact-first debugging, targeted research, and smart subagent delegation.
+This plugin eliminates all the heavy multi-agent loops and token-draining workflows of **Compound Engineering** and **Superpowers**. It replaces markdown specs, plans, and logs with a decentralized, zero-dependency git-commit workflow, a strict bug-to-autotest policy, fact-first debugging, dedicated researcher subagent delegation, and active process management.
 
 ---
 
@@ -33,8 +33,9 @@ Every commit prepared by the agent **must** use this template:
 
 This creates a self-documenting git history that any future agent or developer can search using `git log` rather than consuming tokens reading large directories of markdown logs.
 
-### 3. Strict Target-Driven Investigation & Research
-To prevent token waste, off-topic web search loops, and unnecessary file scanning:
+### 3. Strict Target-Driven Investigation & Mandatory Researcher Subagent
+To prevent token waste, off-topic web search loops, and context pollution:
+- **Mandatory `researcher` Subagent**: Whenever research is needed (local repo context, official docs, or external web research), the main agent **must** delegate the task to the specialized `researcher` subagent (`agents/researcher.md`).
 - **No Blind Scanning**: The agent will not scan directories recursively, search blindly, or read files outside the direct scope of the task.
 - **Ask for Paths (No Recursive Crawling)**: If the agent needs to access a specific file and does not know its path, or if the project has a large directory structure, it is strictly forbidden from running recursive file searches or listings. It must simply ask the user to provide the path in chat.
 - **Thought-First Investigation Planning**: Before using any investigation tool (`view_file`, `list_dir`, `grep_search`, `search_web`), the agent must write down a quick target plan in its thoughts explaining *what specific information/file it needs to find and why*.
@@ -52,6 +53,7 @@ To prevent hanging processes and undetected failures:
 To optimize token usage and automate routine mechanical work:
 - **Do Not Direct the User to Do Dirty Work**: The agent must never instruct the user to manually perform routine mechanical tasks (like copying/moving files, renaming directories, editing single lines, or running simple installs/commands). It must spawn a subagent to handle this automatically.
 - **Reasoning Complexity Assessment**: Before spawning a subagent, the agent must evaluate the task's complexity by depth (not size or quantity):
+  - **Research Tasks**: Always delegate to the `researcher` subagent (`agents/researcher.md`).
   - **Low-Reasoning Tasks (Mechanical/Routine)**: Editing simple syntax, renaming/moving files, performing basic checks. Delegate to a subagent using a cheap, low-reasoning model: `flash_lite` or `flash` to save tokens.
   - **High-Reasoning Tasks (Deep/Complex)**: Complex logic changes, multi-file refactoring, writing complex tests, or solving deep runtime bugs. Delegate using `inherit` or `pro` models.
 
