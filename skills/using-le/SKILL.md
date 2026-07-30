@@ -63,6 +63,7 @@ When executing scripts (PowerShell, Bash, Python, etc.) or running build/run com
 To offload routine work and optimize token usage:
 - **Do Not Direct the User to Do Dirty Work**: Never instruct the user to manually perform routine mechanical tasks (such as copying/moving files, renaming directories, editing single lines, or running trivial package installations/commands). You must spawn a subagent to handle this automatically.
 - **Reasoning Complexity Assessment**: Before spawning a subagent, evaluate the task's complexity by depth (reasoning depth, not size or quantity):
-  - **Research & Context Gathering**: Always delegate to the `researcher` subagent (using `flash` or `flash_lite` for quick lookups, or `pro` for complex codebase surveys).
+  - **Research & Context Gathering**: Always delegate to the `researcher` subagent (using `flash` or `flash_lite` for quick lookups, or `pro` for complex codebase surveys). Use this when facing unfamiliar errors, needing documentation, or needing evidence to distinguish causes.
+  - **Debugging & Root Cause Localization**: Always delegate to the `debugger` subagent when facing a reproducible runtime failure or logic defect whose causal location is unclear. Do NOT guess the cause; let the `debugger` isolate it and provide a repair plan.
   - **Low-Reasoning Tasks (Mechanical/Routine)**: Editing simple syntax, renaming/moving files, installing packages, performing simple checks. Delegate to a subagent (e.g., `self` or `cavecrew-builder`) using a cheap model: `flash_lite` or `flash` to save tokens.
-  - **High-Reasoning Tasks (Deep/Architectural)**: Complex logical changes, multi-file refactoring, writing complex tests, or solving deep runtime bugs. Delegate using `inherit` or `pro` models.
+  - **High-Reasoning Tasks (Deep/Architectural)**: Complex logical changes, multi-file refactoring, writing complex tests. Delegate using `inherit` or `pro` models.

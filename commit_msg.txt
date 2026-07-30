@@ -1,0 +1,11 @@
+feat: integrate debugger and researcher agents into plugin rules
+
+### What was done:
+- skills/using-le/SKILL.md - Added instructions to use Git Commits as persistent memory and to delegate tasks to debugger/researcher subagents.
+- agents/debugger.md - Added debugger agent instructions.
+- agents/researcher.md - Updated researcher agent instructions.
+- AGENTS.md - Added global AGENTS.md to the lightweight-engineering plugin.
+
+### What was NOT done & Why (MANDATORY):
+- Markdown logging files [By Design: we rely strictly on git commit history as our persistent memory to avoid context bloat].
+- Removing all overlapping global rules from AGENTS.md [Out of Scope: kept global rules intact in AGENTS.md while pruning redundancies exclusively from SKILL.md].
