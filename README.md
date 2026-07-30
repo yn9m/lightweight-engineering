@@ -1,61 +1,41 @@
 # Lightweight Engineering (`le`)
 
-A **highly customizable, general-purpose AI-first framework** specifically designed for **Antigravity 2.0**.
+A **highly customizable, token-efficient AI-first framework** specifically designed for **Antigravity 2.0**.
 
-This plugin eliminates all the heavy multi-agent loops and token-draining workflows of **Compound Engineering** and **Superpowers**. It replaces markdown specs, plans, and logs with a decentralized, zero-dependency git-commit workflow, a strict bug-to-autotest policy, fact-first debugging, dedicated researcher subagent delegation, and active process management.
+This plugin eliminates the heavy, token-draining workflows of older AI frameworks (like generating endless markdown specs, plans, and logs). Instead, it enforces a lean, decentralized approach using Git commit history as persistent memory, strict fact-first debugging, and specialized subagents. 
+
+It acts as an overlay on top of the global `AGENTS.md` ruleset, providing specialized behaviors without duplicating standard constraints.
 
 ---
 
-## The Five Core Rules
+## Core Features
 
-This skeleton framework bootstraps your AI agent with exactly five rules:
+This plugin bootstraps your AI agent with the following strict workflow constraints:
 
-### 1. Bug-to-Autotest Guarantee & Fact-First Debugging
-- **Fact-First Debugging**: The agent is strictly prohibited from guessing the cause of bugs or proposing changes without evidence. It must gather facts first (check errors, verify code lines, analyze logs). If context is lacking, it must ask clarifying questions or propose diagnostic commands rather than making assumptions.
-- **Regression Testing**: Whenever the agent debugs or fixes a bug in the codebase, it **must** write an automated test (unit/integration) that reproduces the bug (fails before the fix, passes after) before completing the task. This ensures the bug never recurs and locks in debug findings as code.
+### 1. Bug-to-Autotest Guarantee
+Whenever the agent debugs or fixes a bug, it is strictly prohibited from guessing the cause. It must gather facts first. Once the root cause is verified and fixed, it **must** write an automated test (unit or integration) that reproduces the bug (fails before the fix, passes after). 
 
-### 2. Decentralized Commit Self-Documentation
-Instead of creating and reading separate `.md` log files or requirements specs (which is highly token-expensive), the agent documents its progress directly inside the **Git commit message**.
+### 2. Decentralized Git Persistent Memory
+Writing and reading separate `.md` log files or requirements specs consumes a massive amount of context tokens. 
+- **No Markdown Logs**: The agent is forbidden from creating `.md` log files.
+- **Git Commits as Memory**: Progress is documented directly inside the **Git commit message** using a specific Conventional Commits format that tracks what was done, and explicitly what was **NOT done & Why** (By Design, Out of Scope, Conscious Trade-off).
+- Future agents are instructed to use `git log` to retrieve past context and architectural decisions.
 
-Every commit prepared by the agent **must** use this template:
+### 3. Specialized Subagent Delegation
+The orchestrator must not pollute its own context with endless search loops or debugging trials.
+- **`researcher` Subagent**: Mandatory for gathering context from local repositories, reading official documentation, or looking up external web references.
+- **`debugger` Subagent**: Mandatory for localizing the root cause of reproducible runtime failures and behavioral defects. It diagnoses the issue and returns an evidence-backed repair plan without blindly editing files.
 
-```text
-[feat/fix/chore]: <short description in Conventional Commits format>
+*(Note: Standard investigation rules, process monitoring, and routine task delegation principles are inherited from the global `AGENTS.md` file included in this repository).*
 
-### What was done:
-- [relative file path] - [brief description of changes]
+---
 
-### What was NOT done & Why (MANDATORY):
-- <item omitted/deferred> [By Design: explanation]
-- <item omitted/deferred> [Out of Scope: explanation]
-- <item omitted/deferred> [Conscious Trade-off: explanation]
-```
+## Plugin Structure
 
-This creates a self-documenting git history that any future agent or developer can search using `git log` rather than consuming tokens reading large directories of markdown logs.
-
-### 3. Strict Target-Driven Investigation & Mandatory Researcher Subagent
-To prevent token waste, off-topic web search loops, and context pollution:
-- **Mandatory `researcher` Subagent**: Whenever research is needed (local repo context, official docs, or external web research), the main agent **must** delegate the task to the specialized `researcher` subagent (`agents/researcher.md`).
-- **No Blind Scanning**: The agent will not scan directories recursively, search blindly, or read files outside the direct scope of the task.
-- **Ask for Paths (No Recursive Crawling)**: If the agent needs to access a specific file and does not know its path, or if the project has a large directory structure, it is strictly forbidden from running recursive file searches or listings. It must simply ask the user to provide the path in chat.
-- **Thought-First Investigation Planning**: Before using any investigation tool (`view_file`, `list_dir`, `grep_search`, `search_web`), the agent must write down a quick target plan in its thoughts explaining *what specific information/file it needs to find and why*.
-- **Strict Web Search Constraints**: Web searches are restricted strictly to technical docs, syntax references, or compiler error messages. General-knowledge or unrelated searches are banned.
-- **Strict Workspace Boundaries**: The agent will never read, search, or list files in paths outside the active project root (e.g. user home directories, system folders, App Data).
-
-### 4. Active Process Monitoring & Anti-Dangling Rule
-To prevent hanging processes and undetected failures:
-- **Pre-check Syntax**: Always verify syntax correctness of your scripts before executing them.
-- **Monitor Async Tasks**: When running background commands, verify status/logs using `manage_task` immediately after launching to detect early crashes or syntax errors.
-- **Handle Early Failures**: If a script exits immediately with an error, capture output and address it immediately rather than waiting blindly.
-- **Kill Unresponsive Tasks**: If a task hangs or goes into an infinite loop, terminate it immediately using `manage_task` with action `kill`.
-
-### 5. Smart Subagent Delegation & Model Scaling
-To optimize token usage and automate routine mechanical work:
-- **Do Not Direct the User to Do Dirty Work**: The agent must never instruct the user to manually perform routine mechanical tasks (like copying/moving files, renaming directories, editing single lines, or running simple installs/commands). It must spawn a subagent to handle this automatically.
-- **Reasoning Complexity Assessment**: Before spawning a subagent, the agent must evaluate the task's complexity by depth (not size or quantity):
-  - **Research Tasks**: Always delegate to the `researcher` subagent (`agents/researcher.md`).
-  - **Low-Reasoning Tasks (Mechanical/Routine)**: Editing simple syntax, renaming/moving files, performing basic checks. Delegate to a subagent using a cheap, low-reasoning model: `flash_lite` or `flash` to save tokens.
-  - **High-Reasoning Tasks (Deep/Complex)**: Complex logic changes, multi-file refactoring, writing complex tests, or solving deep runtime bugs. Delegate using `inherit` or `pro` models.
+- `skills/using-le/SKILL.md` - The primary bootstrap skill that establishes the core workflow (Commits as Memory, Autotests, Subagent triggers).
+- `agents/researcher.md` - Subagent instruction for context gathering and documentation research.
+- `agents/debugger.md` - Subagent instruction for evidence-backed root cause localization.
+- `AGENTS.md` - Global behavioral rules (anti-looping, strict workspace boundaries, syntax pre-checking) applied across the workspace.
 
 ---
 
@@ -63,10 +43,10 @@ To optimize token usage and automate routine mechanical work:
 
 Clone this repository into your AI client's plugin directory:
 
-### For Antigravity 2.0 / Claude Code:
+### For Antigravity 2.0:
 1. Place the `lightweight-engineering` folder into:
-   - **Windows**: `C:\Users\<Your-Username>\.gemini\config\plugins\` or `C:\Users\<Your-Username>\.claude\plugins\`
-   - **macOS/Linux**: `~/.gemini/config/plugins/` or `~/.claude/plugins/`
+   - **Windows**: `C:\Users\<Your-Username>\.gemini\config\plugins\`
+   - **macOS/Linux**: `~/.gemini/config/plugins/`
 2. Start a new session. The `le:using-le` skill will bootstrap automatically.
 
 ---
