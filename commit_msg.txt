@@ -1,8 +1,0 @@
-fix: enforce subagent model selection without modifying md files
-
-### What was done:
-- hooks/session-start - Injected a critical system instruction into the session hook to strictly enforce that the orchestrator uses invoke_subagent with the correct Model argument for planner (pro) and executor (flash).
-- plugin.json - Added explicit agents model mapping.
-
-### What was NOT done & Why (MANDATORY):
-- Modifying skill or agent markdown files [By Design: per explicit user requirement to not change the text of any .md files].
