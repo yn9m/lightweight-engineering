@@ -22,7 +22,7 @@ escape_for_json() {
 }
 
 using_le_escaped=$(escape_for_json "$using_le_content")
-session_context="<EXTREMELY_IMPORTANT>\nYou are using the Lightweight Engineering plugin (le) to assist with software development in this codebase.\n\n**Below is the full content of your 'le:using-le' skill - your introduction to using skills. For all other skills, use the 'Skill' tool:**\n\n${using_le_escaped}\n</EXTREMELY_IMPORTANT>"
+session_context="<EXTREMELY_IMPORTANT>\nYou are using the Lightweight Engineering plugin (le) to assist with software development in this codebase.\n\nCRITICAL INSTRUCTION: When handling /plan, /exec, or /fix, you MUST dispatch to the required subagent using the invoke_subagent tool. Do not execute the task yourself. You MUST explicitly set the correct Model parameter exactly as defined in their instructions: for 'planner', set Model to 'pro'; for 'executor', set Model to 'flash'. Do not use default models.\n\n**Below is the full content of your 'le:using-le' skill - your introduction to using skills. For all other skills, use the 'Skill' tool:**\n\n${using_le_escaped}\n</EXTREMELY_IMPORTANT>"
 
 if [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
   # Cursor sets CURSOR_PLUGIN_ROOT

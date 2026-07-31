@@ -2,5 +2,13 @@
   "name": "le",
   "displayName": "Lightweight Engineering",
   "version": "1.0.0",
-  "description": "Lightweight Engineering toolkit providing brainstorming, code review, project setup, and session logging."
+  "description": "Lightweight Engineering toolkit providing brainstorming, code review, project setup, and session logging.",
+  "agents": {
+    "planner": {
+      "model": "pro"
+    },
+    "executor": {
+      "model": "flash"
+    }
+  }
 }
