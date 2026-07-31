@@ -1,0 +1,12 @@
+feat: add new agents and commands, fix plugin structure
+
+### What was done:
+- agents/executor.md - Added executor subagent.
+- agents/planner.md - Added planner subagent.
+- skills/exec/SKILL.md - Moved exec command to its own skill folder to comply with framework rules.
+- skills/fix/SKILL.md - Moved fix command to its own skill folder.
+- skills/plan/SKILL.md - Moved plan command to its own skill folder.
+- hooks/ - Tracked newly added hooks.
+
+### What was NOT done & Why (MANDATORY):
+- Modifying text of new .md files [By Design: per user instructions to preserve the new content verbatim].
